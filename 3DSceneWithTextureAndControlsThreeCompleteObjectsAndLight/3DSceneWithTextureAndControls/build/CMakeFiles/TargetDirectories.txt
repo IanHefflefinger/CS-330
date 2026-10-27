@@ -1,0 +1,3 @@
+/Users/ianhefflefinger/dev/CS-330/3DSceneWithTextureAndControlsThreeCompleteObjectsAndLight/3DSceneWithTextureAndControls/build/CMakeFiles/scene.dir
+/Users/ianhefflefinger/dev/CS-330/3DSceneWithTextureAndControlsThreeCompleteObjectsAndLight/3DSceneWithTextureAndControls/build/CMakeFiles/edit_cache.dir
+/Users/ianhefflefinger/dev/CS-330/3DSceneWithTextureAndControlsThreeCompleteObjectsAndLight/3DSceneWithTextureAndControls/build/CMakeFiles/rebuild_cache.dir

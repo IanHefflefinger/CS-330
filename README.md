@@ -1,29 +1,98 @@
-# CS-330
-CS-330-T3697 Comp Graphic and Visualization 22EW3
+# 3D Scene with Textures, Lighting, and Camera Controls
 
-### How do I approach designing software?
-##### What new design skills has your work on the project helped you to craft?
-Throughout this project, I learned various ways to render shapes, apply textures, and show lighting. Shapes in OpenGL are made of triangles and I am now able to represent many complicated shapes using nothing more than coordinates and triangles. In this project, I was able to use my newfound skills to create: a pen (for writing), an apple (granny smith), a wristwatch, and a wooden table (to hold the aforementioned objects).
+An interactive 3D scene built from scratch in C++ with modern OpenGL (core profile) and GLSL shaders. Textured objects sit on a table and are lit by a light source, and you explore the scene with a free-fly camera driven by the keyboard and mouse.
 
-##### What design process did you follow for your project work?
-First, I create the various shapes in the scene. I designed each object using coordinates and drew triangles to create each object. The objects were then transformed into the right positions relative to each other and to themselves (some needed to be rotated and/or scaled). I also applied controls to allow the user to move around the objects using keys and their mouse. I then applied texture to the objects to give them more than just shape and color. Last, I applied lighting to the scene to give a more realistic representation of the objects.
+![Navigating around the scene](navigating_around_scene.gif)
 
-##### How could tactics from your design approach be applied in future work?
-In the future, I would certainly follow the same protocol. It is important to get the general shapes down first as they are the basis for the scene. After the shapes are in place, adding controls is the logical next step, so you can further understand the project at hand. Texture, lighting, and additional controls are ‘minor’ details that can be added later without much hassle. This approach is logical and prevents too much confusion. If I were working on a larger project with other people, though, I would not follow this approach. On a larger project I would create the object individually in their entirety with texture and lighting as the other objects will be added as needed or by other individuals. 
+## Features
 
-### How do I approach developing programs?
-##### What new development strategies did you use while working on your 3D scene?
-While working on this project, I spent a fair bit of time tinkering with provided code. I spent far more time experimenting on this project than I typically would with a web application or another form of software. I also spent a bit of time diagramming and graphing out objects and coordinates, during the development process. Visualization was an important step in creating 3D objects.
+- Modern OpenGL (shader-based pipeline, vertex array/buffer objects)
+- Texture-mapped objects loaded from PNG files
+- Lighting with a visible light source
+- Free-look camera with keyboard movement and mouse look
+- Cross-platform: builds on macOS and Windows with CMake
 
-##### How did iteration factor into your development?
-Iteration was important when creating objects. I went through the development process for the last two object individually, following an iterative approach of creating the object, adding features, texture, and lighting. This iterative approach made it easier to think of objects as modules that don’t require large changes to the project as a whole, but as parts that can be added or removed as needed. 
+## Controls
 
-##### How has your approach to developing code evolved throughout the milestones, which led you to the project’s completion?
-My development approach has certainly become more modularized, throughout this process. Since beginning this project, I now spent considerably more time thinking of ways to modularize code so that it can be added and removed with ease. Although modularization can be more effort up front, int the long term it makes the process much easier. 
+| Input | Action |
+| --- | --- |
+| **W** | Zoom in |
+| **S** | Zoom out |
+| **A** | Move left |
+| **D** | Move right |
+| **Q** | Move up |
+| **E** | Move down |
+| **Mouse** | Look around |
 
-### How can computer science help me in reaching my goals?
-##### How do computational graphics and visualizations give you new knowledge and skills that can be applied in your future educational pathway?
-Computational graphics and visualization will be useful in future development of visualized systems. I will undoubtably end up creating visualizations for programs and this discipline will help significantly. This skillet also has helped me to understand how computation of the CPU and GPU are used in the process of graphics- down he road this will help me in the planning stages when I am working on larger projects that might take into account various systems that are needed to support the project as a whole (for example, recommending the correct client computer for a piece of GPU intensive software).
+## Quick start
 
-##### How do computational graphics and visualizations give you new knowledge and skills that can be applied in your future professional pathway?
-I will likely be using WebGL in the future and OpenGL is a very similar instruction set. I may also find myself working in CGI or video games in the future which would require many of the skills and pieces of knowledge I have gained in this course. Visualizations of data will certainly be used in the future and the knowledge I have gained in this course will make the process much easier. 
+Clone the repo and move into the project folder, since the build scripts live there:
+
+```bash
+git clone https://github.com/IanHefflefinger/CS-330.git
+cd CS-330/3DSceneWithTextureAndControlsThreeCompleteObjectsAndLight/3DSceneWithTextureAndControls
+```
+
+### macOS
+
+Requires [Homebrew](https://brew.sh) and the Xcode command line tools (`xcode-select --install`).
+
+```bash
+./build-mac.sh --run
+```
+
+The script installs CMake, GLFW, GLEW, and GLM through Homebrew, builds the project, and launches it. Drop `--run` to build without launching.
+
+### Windows
+
+Requires [Git](https://git-scm.com), [CMake](https://cmake.org/download/), and Visual Studio (or Build Tools) with the **Desktop development with C++** workload.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\build-windows.ps1 --run
+```
+
+The script sets up [vcpkg](https://github.com/microsoft/vcpkg) (cloned to `%USERPROFILE%\vcpkg`), installs GLFW, GLEW, and GLM, builds a Release binary, and launches it. The first run takes a few minutes while the libraries compile.
+
+## Building manually
+
+If you already have GLFW, GLEW, and GLM installed, run this from the project folder:
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+./scene          # scene.exe on Windows
+```
+
+On macOS with Homebrew, add `-DCMAKE_PREFIX_PATH="$(brew --prefix)"` to the first command. On Windows with vcpkg, add `-DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake`.
+
+## Repository layout
+
+```
+CS-330/
+├── README.md
+├── navigating_around_scene.gif
+└── 3DSceneWithTextureAndControlsThreeCompleteObjectsAndLight/
+    ├── resources/
+    │   └── textures/                  # PNG textures loaded at runtime
+    └── 3DSceneWithTextureAndControls/
+        ├── Source.cpp                 # scene setup, shaders, render loop, input
+        ├── camera.h                   # camera class
+        ├── stb_image.h                # image loading (single-header library)
+        ├── CMakeLists.txt
+        ├── build-mac.sh
+        └── build-windows.ps1
+```
+
+Run the program **from the `3DSceneWithTextureAndControls` folder**: textures are loaded using the relative path `../resources/textures/`, so launching from anywhere else will give a black or untextured scene.
+
+Texture files expected in `resources/textures/`: `woodTableTexture.png`, `blueTexture1.png`, `watchStrapTexture.png`, `watchBodyTexture.png`, `watchFaceTexture.png`, `appleTexture.png`.
+
+## Troubleshooting
+
+- **Black or untextured scene:** run from the project folder and confirm the texture files above exist.
+- **Window won't open on macOS:** macOS supports OpenGL up to 4.1, so the project requests a 4.1 core context with `#version 410 core` shaders.
+- **CMake can't find GLFW/GLEW/GLM:** re-run the platform build script, or point `CMAKE_PREFIX_PATH` / the vcpkg toolchain at your install.
+
+## Built with
+
+C++17, OpenGL 4.1 core, [GLFW](https://www.glfw.org), [GLEW](https://glew.sourceforge.net), [GLM](https://github.com/g-truc/glm), [stb_image](https://github.com/nothings/stb)

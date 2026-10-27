@@ -3,14 +3,15 @@
 #include <GL/glew.h>            // GLEW library
 #include <GLFW/glfw3.h>         // GLFW library
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>      // Image loading Utility functions
+#include "stb_image.h"      // Image loading Utility functions
 
 // GLM Math Header inclusions
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <learnOpengl/camera.h> // Camera class
+#include "camera.h" // Camera class
 
 using namespace std; // Standard namespace
 
@@ -97,7 +98,7 @@ void UDestroyShaderProgram(GLuint programId);
 
 
 /* Vertex Shader Source Code*/
-const GLchar* vertexShaderSource = GLSL(440,
+const GLchar* vertexShaderSource = GLSL(410,
     layout(location = 0) in vec3 position; // Vertex data from Vertex Attrib Pointer 0
     layout(location = 1) in vec3 normal; // Normal data from Vertex Attrib Pointer 1
     layout(location = 2) in vec2 textureCoordinate;  // Texture data from Vertex Attrib Pointer 2
@@ -125,7 +126,7 @@ const GLchar* vertexShaderSource = GLSL(440,
 
 
 /* Fragment Shader Source Code*/
-const GLchar* fragmentShaderSource = GLSL(440,
+const GLchar* fragmentShaderSource = GLSL(410,
     in vec3 vertexNormal; // Incoming noramls
     in vec3 vertexFragmentPos; // Incoming fragment position
     in vec2 vertexTextureCoordinate; // Incoming texture coordinates
@@ -174,7 +175,7 @@ const GLchar* fragmentShaderSource = GLSL(440,
 );
 
 /* Lamp Shader Source Code*/
-const GLchar* lampVertexShaderSource = GLSL(440,
+const GLchar* lampVertexShaderSource = GLSL(410,
 
     layout(location = 0) in vec3 position; // VAP position 0 for vertex position data
 
@@ -191,7 +192,7 @@ const GLchar* lampVertexShaderSource = GLSL(440,
 
 
 /* Fragment Shader Source Code*/
-const GLchar* lampFragmentShaderSource = GLSL(440,
+const GLchar* lampFragmentShaderSource = GLSL(410,
 
     out vec4 fragmentColor; // For outgoing lamp color (smaller cube) to the GPU
 
@@ -333,7 +334,7 @@ bool UInitialize(int argc, char* argv[], GLFWwindow** window)
     // ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
